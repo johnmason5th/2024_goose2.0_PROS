@@ -1,0 +1,66 @@
+bool matchloading = false;
+void puncherNoDistSensor() {
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+        matchloading = !matchloading;
+    }
+    if (matchloading) {
+        puncherMotorsVolt(127);
+    } else {
+        int puncherDegrees = puncherRotationSensor.get_angle() / 100;
+        if ((tuckAngle-5) < puncherDegrees && puncherDegrees < (tuckAngle+5)) {
+            puncherMotorsBrake();
+        } else {
+            puncherMotorsVolt(127);
+        }
+    }
+}
+void puncherDumb() {
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+        matchloading = !matchloading;
+    }
+    if (matchloading) {
+        puncherMotorsVolt(127);
+    } else {
+        puncherMotorsBrake();
+    }
+}
+bool puncherEnabled = true;
+int timeAtShutoff = 0;
+int WAIT_TIME = 800;
+int PUNCHER_RETRACTION_TIME = 1200;
+void puncherNoRotSensor() {
+    if (!puncherEnabled) {
+        puncherMotor11.set_brake_mode(MOTOR_BRAKE_COAST);
+        puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_COAST);
+        return;
+    }
+
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+        matchloading = !matchloading;
+        timeAtShutoff = pros::millis();
+    }
+
+    if (matchloading) {
+        puncherMotorsVolt((int)(127.0*0.75));
+    } else {
+        if ((pros::millis() - timeAtShutoff) < WAIT_TIME) {
+            puncherMotor11.set_brake_mode(MOTOR_BRAKE_COAST);
+            puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_COAST);
+            puncherMotorsBrake();
+        } else if ((pros::millis() - timeAtShutoff) < PUNCHER_RETRACTION_TIME) {
+            puncherMotorsVolt(100);
+        } else {
+            puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
+            puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
+            puncherMotorsBrake();
+        }
+    }
+}
+
+void hang1() {
+    if (hangSwitch.get_value() && liftEnabled && (90000 - (pros::millis() - driverControlStartTime))) {
+        hangEnabled = true;
+        hangSolenoid.set_value(true);
+        liftSolenoid.set_value(false);
+    }
+}

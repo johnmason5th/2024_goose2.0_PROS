@@ -1,0 +1,137 @@
+To Do Programming
+- Implement brain touchscreen for choosing auton settings
+- Object oriented programming
+- Version control
+
+
+
+To Do 10/19/23
+
+Judges
+- Auton strategy, how it works, why auton point
+- How its run
+- Use humor
+- Think Award
+Judges Notes
+- Talk about sensors, Autonomous
+Sensors
+- Drivetrain encoders: Help track robot position
+- Inertial sensor: Help track robot orientation
+- Rotation sensor: Since catapult is in the way of the elevation bar, need to be tucked down. 
+    Gives feedback to catapult control algorithm for moving the catapult below a certain angle
+
+Autonomous
+- Near auton: Removes MLZ every run, scores alliance triball in opponent goal, and touches elevation bar
+- 
+Supplementary Algorithms
+- PID controller: Drivetrain, uses error between the motor encoder's desired position and current position to set motor voltage
+- Slew rate controller: Limits drivetrain acceleration to be more gradual rather than instantaneous acceleration, 
+    prevents slipping and maximizes travel speed
+- Odometry: Uses 
+
+===Improving Code===
+
+Auton simulator program
+Maybe just use Godot to write something and create a script. Just copy-paste script to code
+
+###Autonomous###
+
+- Need to change auton movement to be based on position and not distance: error from good-enough accuracy can build up with distances,
+    position-based movement will be more accurate as it is constantly tracking position.
+
+Odometry
+- Swap heading from clockwise to counterclockwise, to be in convention and work with atan2
+
+
+-* Motion Planning, limit acceleration, to prevent slippage (sorta done, a sort of slew controller)
+-* Write Autons
+    - Far side (Simple done)
+    - Close side (Simple done)
+- Prgm Skills (None designed)
+- Write auton selector
+
+- Use encoders for moving hang and not just velocity, to keep robot straight
+
+!!!Prioritize win point over score maximizing!!! Win point is powerful boost in ranking
+Win point: Remove triball from MLZ, Touch Elevation bar, Score alliance triball in alliance goal
+Close side win point actions: remove MLZ, Touch Elevation Bar
+Far side win point actions: Score alliance triball in goal, touch elevation bar
+
+###Improving Auton Control###
+    Goals:
+    - Optimize speed and accuracy as much as possible
+        - Use better algorithms for calculating speeds, make good use of sensors for accuracy
+    - Score more with the time gained from optimization
+Odometry
+    Necessary for Point-to-point motion
+- Get accurate constants left and right wheel dist
+Motion profiling
+    Helps optimize motor acceleration and speeds
+Point-based motion
+    Get robot to track its position and move to points, correcting if needed, rather than only move and turn
+    - Point-to-point movement
+Spline-based motion
+
+Motion profiling goals:
+- Make accelerations limited to prevent tipping and wheel slippage
+- Automate optimizing robot accelerations and speeds throughout paths
+
+How to motion profile
+
+############
+#Autonomous#
+############
+Near
+
+Far
+
+Skills Notes:
+- 44 match loads
+- Should launch 46 times in case of redundancy
+- Cata should be encoder-based, not time; Triball placement could change speeds, etc so time is bad, distance is better
+    - Figure out how many encoder units are necessary to launch 46 times
+- Around 20 seconds left from launching
+
+
+/**
+* certain motions of robot should be limited to prevent slipping
+* acceleration to prevent wheel slippage
+* velocity, later when curves are designed, to prevent robot sliding
+* 
+* in order to prevent overacceleration, change in velocity has to be limited
+* need to know previous velocity and set velocity
+* 
+* 
+* ##Timeout##
+* ideally the move tool automatically calculates how long the bot would likely take to move
+* if the robot gets stuck driving into something, we would want it to stop moving
+* !Idea, rather than set a time until it stops, just check if robot is moving. if not for certain time, just quit
+*/
+
+Improve designing Auton
+- Make graphical auton editor, to visually simulate robot and make writing autons easier
+- Allow setting velocity
+- Maybe do odom, position tracking
+    - base movement off of points rather than scalars
+
+General
+- !!Design switching top motors between drivetrain and hang!!
+- Optimize code better
+- Organize, restructure code better
+
+
+Optimize code to run quickly
+- Check controller state as little as possible, run as little code as possible
+- 
+
+
+Auton stuff
+
+- Code hates decimal move values
+- for some reason doesn't turn 90 degrees properly
+- triball flings out when turning, should turn slower. Be able to set velocity for both move and turn
+
+Probably added timeout, should work now, not tested tho
+*- When bot rams into goal, doesn't stop, gets stuck, so should probably add timeout
+
+

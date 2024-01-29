@@ -1,0 +1,4 @@
+##Drivetrain control##
+- Control through voltage. Velocity has motor use its own PID. Velocity causes motors to go at same speed. Voltage changes power instead
+
+
