@@ -2,12 +2,12 @@
 
 // Helper Functions
 double avgDriveEncoderValue() {
-	return (left2.get_position() + right1.get_position()) / 2.0;
+	return (leftDT.get_positions()[1] + rightDT.get_positions()[0]) / 2.0;
 }
 
 void resetDriveEncoders() {
-	left2.tare_position();
-	right1.tare_position();
+	leftDT.tare_position();
+	rightDT.tare_position();
 }
 
 int prevLeftVolt = 0;
@@ -26,12 +26,8 @@ void setDrive(int leftVoltage, int rightVoltage) {
 	}
 	prevRightVolt = rightVoltage;
 
-	left1 = leftVoltage;
-	left2 = leftVoltage;
-	left3 = leftVoltage;
-	right1 = rightVoltage;
-	right2 = rightVoltage;
-	right3 = rightVoltage;
+	leftDT = leftVoltage;
+	rightDT = rightVoltage;
 }
 
 bool touchHang = true;
@@ -113,14 +109,8 @@ void moveToPoint(double targetX, double targetY, int maxMilliseconds, int voltag
 		pros::delay(10);
 	}
 
-	left1.brake();
-	left2.brake();
-	if (!left_3Hang)
-		left3.brake();
-	right1.brake();
-	right2.brake();
-	if (!right_3Hang)
-		right3.brake();
+	leftDT.brake();
+	rightDT.brake();
 }
 
 void moveRelative(double tiles, int maxMilliseconds, int voltage) {
@@ -151,14 +141,9 @@ void moveRelative(double tiles, int maxMilliseconds, int voltage) {
 
 		pros::delay(10);
 	}
-	left1.brake();
-	left2.brake();
-	if (!left_3Hang)
-		left3.brake();
-	right1.brake();
-	right2.brake();
-	if (!right_3Hang)
-		right3.brake();
+	
+	leftDT.brake();
+	rightDT.brake();
 }
 
 void turnRelative(double degrees, int maxMilliseconds, int voltage) {
@@ -176,14 +161,9 @@ void turnRelative(double degrees, int maxMilliseconds, int voltage) {
 		setDrive(turnOutput, -turnOutput);
 		pros::delay(10);
 	}
-	left1.brake();
-	left2.brake();
-	if (!left_3Hang)
-	left3.brake();
-	right1.brake();
-	right2.brake();
-	if(!right_3Hang)
-	right3.brake();
+
+	leftDT.brake();
+	rightDT.brake();
 }
 
 /**

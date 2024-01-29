@@ -3,12 +3,8 @@
 // Drivetrain Helper Functions
 
 void setDrivetrainBrakeMode(pros::motor_brake_mode_e brakeMode) {
-    left1.set_brake_mode(brakeMode);
-	left2.set_brake_mode(brakeMode);
-	left3.set_brake_mode(brakeMode);
-	right1.set_brake_mode(brakeMode);
-	right2.set_brake_mode(brakeMode);
-	right3.set_brake_mode(brakeMode);
+    leftDT.set_brake_modes(brakeMode);
+	rightDT.set_brake_modes(brakeMode);
 }
 
 int leftDTTarget {0};
@@ -30,12 +26,8 @@ void drivetrain() {
     leftDTTarget = speed+turn;
     rightDTTarget = speed-turn;
 
-	left1 = leftDTTarget;
-	left2 = leftDTTarget;
-	left3 = leftDTTarget;
-	right1 = rightDTTarget;
-	right2 = rightDTTarget;
-	right3 = rightDTTarget;
+	leftDT = leftDTTarget;
+	rightDT = rightDTTarget;
 }
 
 void intake() {

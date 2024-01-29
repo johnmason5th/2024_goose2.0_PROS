@@ -20,8 +20,8 @@ void odometry(void* param) {
 	while(true) {
 		if(!odomEnabled) continue;
 		//Get encoder values and assign to variables
-		int leftEncoderVal = left2.get_position();
-		int rightEncoderVal = right1.get_position();
+		int leftEncoderVal = leftDT.get_positions()[1];
+		int rightEncoderVal = rightDT.get_positions()[0];
 		int perpEncoderVal = 0;
 		
 		int leftEncoderChange = leftEncoderVal - prevLeftEncoderVal;
