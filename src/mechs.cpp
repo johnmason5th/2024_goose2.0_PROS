@@ -8,7 +8,7 @@ void setDrivetrainBrakeMode(pros::motor_brake_mode_e brakeMode) {
 	left3.set_brake_mode(brakeMode);
 	right1.set_brake_mode(brakeMode);
 	right2.set_brake_mode(brakeMode);
-	right_3.set_brake_mode(brakeMode);
+	right3.set_brake_mode(brakeMode);
 }
 
 int leftDTTarget {0};
@@ -35,7 +35,7 @@ void drivetrain() {
 	left3 = leftDTTarget;
 	right1 = rightDTTarget;
 	right2 = rightDTTarget;
-	right_3 = rightDTTarget;
+	right3 = rightDTTarget;
 }
 
 void intake() {

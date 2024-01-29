@@ -11,7 +11,7 @@ void debugDrivetrainEncoders() {
 	controller.print(0,0,str.c_str());
 	str = std::to_string((int)right1.get_position())+" ";
 	str += std::to_string((int)right2.get_position())+" ";
-	str += std::to_string((int)right_3.get_position());
+	str += std::to_string((int)right3.get_position());
 	pros::delay(50);
 	controller.print(1,0,str.c_str());
 }

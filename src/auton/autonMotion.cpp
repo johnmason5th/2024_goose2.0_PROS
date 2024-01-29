@@ -1,4 +1,3 @@
-#include "main.h"
 #include "auton/autonMotion.hpp"
 
 // Helper Functions
@@ -29,12 +28,10 @@ void setDrive(int leftVoltage, int rightVoltage) {
 
 	left1 = leftVoltage;
 	left2 = leftVoltage;
-	if (!left_3Hang)
 	left3 = leftVoltage;
 	right1 = rightVoltage;
 	right2 = rightVoltage;
-	if (!right_3Hang)
-	right_3 = rightVoltage;
+	right3 = rightVoltage;
 }
 
 bool touchHang = true;
@@ -123,7 +120,7 @@ void moveToPoint(double targetX, double targetY, int maxMilliseconds, int voltag
 	right1.brake();
 	right2.brake();
 	if (!right_3Hang)
-		right_3.brake();
+		right3.brake();
 }
 
 void moveRelative(double tiles, int maxMilliseconds, int voltage) {
@@ -161,7 +158,7 @@ void moveRelative(double tiles, int maxMilliseconds, int voltage) {
 	right1.brake();
 	right2.brake();
 	if (!right_3Hang)
-		right_3.brake();
+		right3.brake();
 }
 
 void turnRelative(double degrees, int maxMilliseconds, int voltage) {
@@ -186,7 +183,7 @@ void turnRelative(double degrees, int maxMilliseconds, int voltage) {
 	right1.brake();
 	right2.brake();
 	if(!right_3Hang)
-	right_3.brake();
+	right3.brake();
 }
 
 /**

@@ -68,21 +68,21 @@ void pushAuton() {
 	left3 = -100;
 	right1 = -100;
 	right2 = -100;
-	right_3 = -100;
+	right3 = -100;
 	pros::delay(1000);
 	left1 = 100;
 	left2 = 100;
 	left3 = 100;
 	right1 = 100;
 	right2 = 100;
-	right_3 = 100;
+	right3 = 100;
 	pros::delay(500);
 	left1 = 0;
 	left2 = 0;
 	left3 = 0;
 	right1 = 0;
 	right2 = 0;
-	right_3 = 0;
+	right3 = 0;
 }
 /*
 Prgm Skills Process:

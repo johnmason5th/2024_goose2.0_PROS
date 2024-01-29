@@ -33,7 +33,7 @@ pros::Motor left2(-5);
 pros::Motor left3(-3);
 pros::Motor right1(1);
 pros::Motor right2(2);
-pros::Motor right_3(4);
+pros::Motor right3(4);
 bool left_3Hang = false;
 bool right_3Hang = false;
 

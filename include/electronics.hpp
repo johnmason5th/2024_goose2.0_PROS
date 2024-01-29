@@ -22,7 +22,7 @@ extern pros::Motor left2;
 extern pros::Motor left3;
 extern pros::Motor right1;
 extern pros::Motor right2;
-extern pros::Motor right_3;
+extern pros::Motor right3;
 extern bool left_3Hang;
 extern bool right_3Hang;
 
