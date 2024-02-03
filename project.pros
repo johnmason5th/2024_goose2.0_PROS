@@ -1,7 +1,7 @@
 {
   "py/object": "pros.conductor.project.Project",
   "py/state": {
-    "project_name": "Near",
+    "project_name": "Far",
     "target": "v5",
     "templates": {
       "Graphy": {
@@ -329,7 +329,7 @@
       "after": "screen",
       "description": "Goose2 Project",
       "icon": "pros",
-      "slot": 1
+      "slot": 2
     }
   }
 }

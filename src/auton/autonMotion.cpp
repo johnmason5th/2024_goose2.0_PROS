@@ -12,7 +12,7 @@ void resetDriveEncoders() {
 
 int prevLeftVolt = 0;
 int prevRightVolt = 0;
-const int minDeltaVolt = 8;
+const int minDeltaVolt = 10;
 void setDrive(int leftVoltage, int rightVoltage) {
 	if (abs(leftVoltage - prevLeftVolt) > minDeltaVolt) {
 		int direction = abs(leftVoltage - prevLeftVolt)/(leftVoltage - prevLeftVolt);
@@ -150,7 +150,7 @@ void turnRelative(double degrees, int maxMilliseconds, int voltage) {
 	double headingInitial = g_robotHeading;
 	double targetSensorValue = headingInitial - degrees;
 
-	PID turnPID = PID(1.8, 0.0, 20, 1);
+	PID turnPID = PID(1.84, 0.0, 20, 1);
 	double turnPIDOutput = turnPID.compute(targetSensorValue, g_robotHeading);
 	int initialTime = pros::millis();
 	while (!(turnPID.settled() || ((pros::millis() - initialTime) > maxMilliseconds))) {

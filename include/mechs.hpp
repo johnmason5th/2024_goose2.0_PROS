@@ -15,8 +15,8 @@ void on_right_button_lcd();
 
 void puncherMotorsBrake();
 void puncherMotorsVolt(int volt);
-void puncher();
-void puncherNoRotSensor();
+void puncherWithRot();
+void puncherDumb();
 
 void wings();
 

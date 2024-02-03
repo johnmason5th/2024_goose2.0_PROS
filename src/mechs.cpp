@@ -50,7 +50,7 @@ const int DIST_SENSOR_DIST = 25;
 const int WAIT_SINCE_LOADED = 0;
 int timeAtLoad = 0;
 std::string mode = "retracting";
-void puncher() {
+void puncherWithRot() {
     int currentAngle = puncherRotationSensor.get_angle() / 100;
 
     retracted = ((tuckAngle-5) < currentAngle && currentAngle < (tuckAngle+5));
@@ -76,6 +76,17 @@ void puncher() {
         if (currentAngle > tuckAngle + 6) {
             mode = "retracting";
         }
+    }
+}
+bool matchloading = false;
+void puncherDumb() {
+    if (controller.get_digital_new_press(DIGITAL_Y)) {
+        matchloading = !matchloading;
+    }
+    if (matchloading) {
+        puncherMotorsVolt(127);
+    } else {
+        puncherMotorsBrake();
     }
 }
 

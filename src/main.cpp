@@ -1,8 +1,12 @@
 #include "main.h"
 // 1:Near  2:Far  3:Skills
-const int AUTON_TYPE = 1;
+const int AUTON_TYPE = 2;
 
 /*
+## Changes Requests ##
+- Skills, auton, use distance sensor
+- Kaboomer releases, puncher releases
+
 ## Innovations ##
 - Forward backward stick, even if joystick turned a little, leave at full power
 	- driver accidentally turns unintentionally
@@ -19,6 +23,7 @@ const bool ENABLE_GRAPHY = false;
 void initialize() {
 	puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
 	puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
+
 	controller.clear();
 	pros::delay(50);
 	controller.print(1,0,"Calibrating");
@@ -131,7 +136,12 @@ void opcontrol() {
 	while(true) {
 		drivetrain();
 		intake();
-		puncher();
+		puncherWithRot();
+		// if (puncherRotationSensor.get_angle() == INFINITY) {
+		// 	puncherDumb();
+		// } else {
+		// 	puncherWithRot();
+		// }
 		wings();
 		lift();
 		hang();

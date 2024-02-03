@@ -1,5 +1,13 @@
 #include "autons.hpp"
 
+void waitForInput() {
+	while (true) {
+		if (controller.get_digital(DIGITAL_A)) {
+			return;
+		}
+	}
+}
+
 /**
  * Grab center triball
  * Remove mlz triball
@@ -12,54 +20,50 @@ void nearAuton() {
 	// Grab Center Triball
 	intakeMotor = 127;
 	moveRelative(2, 1500);
-	// Remove MLZ Triball
-	moveRelative(-1.8, 1500);
-	wingsLeftSolenoid.set_value(true);
-	turnRelative(245, 1200);
-	turnAbsolute(210+20, 1000);
-	// Score Ally Triball
 	
+	// Remove MLZ Triball
+	moveRelative(-1.78, 1500);
+	wingsLeftSolenoid.set_value(true);
+	pros::delay(500);
+	turnRelative(245, 1200);
+
+	// Score Ally Triball
+	turnAbsolute(210+20, 1000);
+	moveRelative(-1.6, 1500);
+
 	// Dump Triballs
+	
 
 	// Optional: Touch Hang
 }
 
 // -35
 void farAuton() {
-	// Dump ally triball
-	intakeMotor = 127;
-	moveRelative(1.6, 1600);
-	turnAbsolute(0-35, 1000);
-	intakeMotor = -127;
-	pros::delay(1000);
 	// Grab center barrier triball
-	turnAbsolute(35-35, 1000);
-	moveRelative(0.7, 1000);
+	intakeMotor = 127;
+	moveRelative(2.5, 1300);
 
 	// Shove triballs into goal
-	turnAbsolute(-90-35, 1500);
+	turnAbsolute(-91-35, 800);
 	intakeMotor = 0;
 	wingsLeftSolenoid.set_value(true);
 	wingsRightSolenoid.set_value(true);
-	moveRelative(1.58, 1000);
+	moveRelative(1.6, 1000);
 	wingsLeftSolenoid.set_value(false);
 	wingsRightSolenoid.set_value(false);
-	moveRelative(-0.50, 1000);
+	moveRelative(-0.50, 600);
 	// Grab third triball
-	turnAbsolute(130-35, 1500);
-	intakeMotor = -127;
-	moveRelative(1.24, 1000);
-	// Score triball
-	turnAbsolute(281-35, 1300);
+	turnAbsolute(122-35, 1000);
+	intakeMotor = 127;
+	moveRelative(1.08, 800);
+	// Shove Triballs
+	turnAbsolute(230-35, 600);
+	moveRelative(1.9, 1200);
+	turnAbsolute(-75-35, 450);
+	moveRelative(0.8, 700);
+	turnAbsolute(0-35, 500);
 	intakeMotor = 0;
-	moveRelative(2, 1200);
-	moveRelative(-0.5, 1000);
-
-	// Go to hang
-	turnAbsolute(190-35, 1000);
-	moveRelative(2, 1200);
-	turnAbsolute(90-35, 1000);
-	moveRelative(1.23, 1000);
+	moveRelative(0.5, 600);
 }
 
 void pushAuton() {
@@ -86,15 +90,17 @@ void prgmSkills() {
 	turnAbsolute(65, 800);
 	moveRelative(-0.1, 500);
 	liftSolenoid.set_value(true);
-	puncherMotorsVolt(120);
-	// pros::delay(2000);
-	pros::delay(35 * 1000);
+	int puncherStart = pros::millis();
+	while ((puncherStart + 35000) < pros::millis()) {
+		puncherWithRot();
+	}	
 	liftSolenoid.set_value(false);
 
-	// Move to opposite side
+	// Launch Triballs
 	while (puncherRotationSensor.get_angle()/100 < (70-5) || (70+5) < puncherRotationSensor.get_angle()/100) {}
 	puncherMotorsBrake();
 
+	// Move to opposite side
 	turnAbsolute(0, 1500);
 	moveRelative(0.5, 800);
 	turnAbsolute(45, 1000);

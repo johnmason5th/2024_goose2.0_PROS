@@ -12,10 +12,10 @@ pros::ADIDigitalIn hangSwitch('Z');
 pros::Motor intakeMotor(7, pros::E_MOTOR_GEARSET_06, true);
 
 pros::ADIEncoder perpendicularWheel(('H','G'), false);
-pros::IMU inertialSensor(17);
+pros::IMU inertialSensor(14);
 
 pros::Rotation puncherRotationSensor(15);
-pros::Distance puncherDistanceSensor(18);
+pros::Distance puncherDistanceSensor(17);
 pros::Motor puncherMotor11(20, pros::E_MOTOR_GEARSET_36, true);
 pros::Motor puncherMotor5_5(16, pros::E_MOTOR_GEARSET_36, false);
 

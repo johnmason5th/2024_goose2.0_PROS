@@ -7,6 +7,8 @@ void printController(void* param) {
 	while (true) {
 		if (!controllerScreenEnabled) continue;
 		controller.print(0, 0, ("Btry: "+std::to_string((int)pros::battery::get_capacity()) + " Time: "+std::to_string((90000 - (pros::millis() - driverControlStartTime))/1000)).c_str());
+		pros::delay(50);
+		controller.print(1,0,("Mtr Temp: "+std::to_string((int)rightDT.get_temperatures()[0])).c_str());
 		pros::delay(1000);
 	}
 }
