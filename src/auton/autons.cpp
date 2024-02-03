@@ -50,26 +50,6 @@ void nearAuton() {
 	wingsRightSolenoid.set_value(false);
 	intakeMotor = 0;
 }
-void nearAuton2() {
-	// Grab Center Triball
-	intakeMotor = 127;
-	moveRelative(2, 1500);
-	
-	// Remove MLZ Triball
-	moveRelative(-1.78, 1500);
-	wingsLeftSolenoid.set_value(true);
-	pros::delay(500);
-	turnRelative(245, 1200);
-
-	// Score Ally Triball
-	turnAbsolute(210+20, 1000);
-	moveRelative(-1.6, 1500);
-
-	// Dump Triballs
-	
-
-	// Optional: Touch Hang
-}
 
 // -35
 void farAuton() {

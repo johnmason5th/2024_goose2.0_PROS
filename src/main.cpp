@@ -1,11 +1,11 @@
 #include "main.h"
 // 1:Near  2:Far  3:Skills
-const int AUTON_TYPE = 1;
+const int AUTON_TYPE = 3;
 
 /*
 ## Changes Requests ##
-- Skills, auton, use distance sensor
-- Kaboomer releases, puncher releases
+Done- Skills, auton, use distance sensor
+Done- Kaboomer releases, puncher releases
 
 ## Innovations ##
 - Forward backward stick, even if joystick turned a little, leave at full power

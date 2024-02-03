@@ -46,7 +46,7 @@ bool liftEnabled = false;
 bool retracted = true;
 bool loaded = false;
 int tuckAngle = 50;
-const int DIST_SENSOR_DIST = 25;
+const int DIST_SENSOR_DIST = 30;
 const int WAIT_SINCE_LOADED = 0;
 int timeAtLoad = 0;
 std::string mode = "retracting";
@@ -122,6 +122,7 @@ void hang() {
         hangEnabled = true;
         hangSolenoid.set_value(true);
         liftSolenoid.set_value(false);
+
         puncherEnabled = false;
         puncherMotor11.set_brake_mode(MOTOR_BRAKE_COAST);
         puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_COAST);
