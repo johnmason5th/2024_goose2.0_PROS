@@ -17,6 +17,40 @@ void waitForInput() {
 */
 // Starts at angle of -20 relative to field
 void nearAuton() {
+	// Shoot ally triball towards goal
+	wingsLeftSolenoid.set_value(true);
+	pros::delay(250);
+	wingsLeftSolenoid.set_value(false);
+
+	// Grab Triball
+	intakeMotor = 127;
+	moveRelative(2, 1300);
+
+	// Score ally triball
+	moveRelative(-1.9, 1400);
+	turnAbsolute(-157+20, 1000);
+	moveRelative(-1.3, 1200);
+
+	// Remove MLZ triball
+	turnAbsolute(177+20, 650);
+	moveRelative(0.45, 700);
+	turnAbsolute(-120+20, 500);
+	wingsRightSolenoid.set_value(true);
+	moveRelative(0.6, 800);
+	turnAbsolute(-105+20, 600);
+
+	// Push triballs across hang
+	intakeMotor = -127;
+	moveRelative(1, 900);
+	wingsRightSolenoid.set_value(false);
+	turnAbsolute(-80+20, 600);
+	wingsRightSolenoid.set_value(true);
+	moveRelative(0.72, 1000);
+	pros::delay(500);
+	wingsRightSolenoid.set_value(false);
+	intakeMotor = 0;
+}
+void nearAuton2() {
 	// Grab Center Triball
 	intakeMotor = 127;
 	moveRelative(2, 1500);
@@ -41,7 +75,7 @@ void nearAuton() {
 void farAuton() {
 	// Grab center barrier triball
 	intakeMotor = 127;
-	moveRelative(2.5, 1300);
+	moveRelative(2.52, 1400);
 
 	// Shove triballs into goal
 	turnAbsolute(-91-35, 800);
@@ -53,17 +87,24 @@ void farAuton() {
 	wingsRightSolenoid.set_value(false);
 	moveRelative(-0.50, 600);
 	// Grab third triball
-	turnAbsolute(122-35, 1000);
+	turnAbsolute(122-35, 700);
 	intakeMotor = 127;
 	moveRelative(1.08, 800);
 	// Shove Triballs
 	turnAbsolute(230-35, 600);
-	moveRelative(1.9, 1200);
-	turnAbsolute(-75-35, 450);
-	moveRelative(0.8, 700);
-	turnAbsolute(0-35, 500);
+	moveRelative(1.81, 1500);
+	turnAbsolute(-45-35, 500);
+	intakeMotor = -127;
+	wingsRightSolenoid.set_value(true);
+	moveRelative(0.5, 700);
+	turnRelative(180, 900);
+	turnAbsolute(135-35, 700);
+	wingsRightSolenoid.set_value(false);
 	intakeMotor = 0;
-	moveRelative(0.5, 600);
+	moveRelative(-1, 700);
+	moveRelative(0.5, 700);
+	moveRelative(-1, 700);
+	moveRelative(0.5, 700);
 }
 
 void pushAuton() {

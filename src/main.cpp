@@ -1,6 +1,6 @@
 #include "main.h"
 // 1:Near  2:Far  3:Skills
-const int AUTON_TYPE = 2;
+const int AUTON_TYPE = 1;
 
 /*
 ## Changes Requests ##

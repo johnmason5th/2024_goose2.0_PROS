@@ -40,7 +40,7 @@ void intake() {
     }
 }
 
-bool puncherEnabled = false;
+bool puncherEnabled = true;
 bool liftEnabled = false;
 
 bool retracted = true;
@@ -51,6 +51,7 @@ const int WAIT_SINCE_LOADED = 0;
 int timeAtLoad = 0;
 std::string mode = "retracting";
 void puncherWithRot() {
+    if (!puncherEnabled) return;
     int currentAngle = puncherRotationSensor.get_angle() / 100;
 
     retracted = ((tuckAngle-5) < currentAngle && currentAngle < (tuckAngle+5));
@@ -122,5 +123,7 @@ void hang() {
         hangSolenoid.set_value(true);
         liftSolenoid.set_value(false);
         puncherEnabled = false;
+        puncherMotor11.set_brake_mode(MOTOR_BRAKE_COAST);
+        puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_COAST);
     }
 }
