@@ -54,13 +54,13 @@ void puncherWithRot() {
     if (!puncherEnabled) return;
     int currentAngle = puncherRotationSensor.get_angle() / 100;
 
-    retracted = ((tuckAngle-5) < currentAngle && currentAngle < (tuckAngle+5));
+    retracted = ((tuckAngle-10) < currentAngle && currentAngle < (tuckAngle+10));
     if (liftEnabled && puncherDistanceSensor.get() < DIST_SENSOR_DIST && !loaded) {
         loaded = true;
         timeAtLoad = pros::millis();
     }
 
-    if (loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED) {
+    if ((loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED) || !retracted) {
         mode = "launching";
     }
 

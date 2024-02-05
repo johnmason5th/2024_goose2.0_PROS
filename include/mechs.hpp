@@ -8,7 +8,7 @@ void setDrivetrainBrakeMode(pros::motor_brake_mode_e brakeMode);
 void drivetrain();
 
 void intake();
-
+extern bool liftEnabled;
 void on_left_button_lcd();
 void on_center_button_lcd();
 void on_right_button_lcd();

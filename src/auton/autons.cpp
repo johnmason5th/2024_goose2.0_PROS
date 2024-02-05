@@ -1,13 +1,5 @@
 #include "autons.hpp"
 
-void waitForInput() {
-	while (true) {
-		if (controller.get_digital(DIGITAL_A)) {
-			return;
-		}
-	}
-}
-
 /**
  * Grab center triball
  * Remove mlz triball
@@ -103,48 +95,60 @@ Prgm Skills Process:
 - launch for enough time to get all triballs over
 - Go and push triballs into goal
 */
+// -135
+const int MATCHLOADING_TIME = 32000;
 void prgmSkills() {
 	puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
 	puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
 	// Set up for launching
 	moveRelative(-0.25, 500);
-	turnAbsolute(65, 800);
-	moveRelative(-0.1, 500);
+	turnAbsolute(-75+135, 800);
+	moveRelative(-0.2, 500);
 	liftSolenoid.set_value(true);
+	liftEnabled = true;
 	int puncherStart = pros::millis();
-	while ((puncherStart + 35000) < pros::millis()) {
+	while ((puncherStart + MATCHLOADING_TIME) > pros::millis()) {
 		puncherWithRot();
-	}	
+	}
 	liftSolenoid.set_value(false);
 
-	// Launch Triballs
-	while (puncherRotationSensor.get_angle()/100 < (70-5) || (70+5) < puncherRotationSensor.get_angle()/100) {}
+	// Retract Puncher for Crossing
+	puncherMotorsVolt(127);
+	while (puncherRotationSensor.get_angle()/100 < (50-5) || (50+5) < puncherRotationSensor.get_angle()/100) {}
 	puncherMotorsBrake();
 
 	// Move to opposite side
-	turnAbsolute(0, 1500);
-	moveRelative(0.5, 800);
-	turnAbsolute(45, 1000);
+	turnAbsolute(-135+135, 700);
+	moveRelative(0.5, 700);
+	turnAbsolute(-90+135, 700);
 	moveRelative(3.2, 2000);
 
-	// Shove first face of goal
-	turnAbsolute(-15, 2400);
-	moveRelative(2.4, 1500);
-	turnAbsolute(-135, 1000);
-	// wingsSolenoid.set_value(true);
-	
+	// Shove side face of goal
+	turnAbsolute(-20+135, 1000);
 	moveRelative(2, 1500);
-	// wingsSolenoid.set_value(false);
+	moveRelative(-0.5, 800);
+
+	// Shove first face of goal
+	turnAbsolute(45+135, 600);
+	moveRelative(2.4, 1500);
+	turnAbsolute(-90+135, 1000);
+	wingsLeftSolenoid.set_value(true);
+	wingsRightSolenoid.set_value(true);
+	moveRelative(2, 1500);
+	wingsLeftSolenoid.set_value(false);
+	wingsRightSolenoid.set_value(false);
 
 	// Shove second face of goal
 	moveRelative(-1.4, 1000);
-	turnAbsolute(-45, 2000);
+	turnAbsolute(0+135, 1000);
 	moveRelative(0.5, 1000);
-	turnAbsolute(-135, 1000);
+	turnAbsolute(-90+135, 1000);
 
-	// wingsSolenoid.set_value(true);
+	wingsLeftSolenoid.set_value(true);
+	wingsRightSolenoid.set_value(true);
 	moveRelative(2, 2000);
-	// wingsSolenoid.set_value(false);
+	wingsLeftSolenoid.set_value(false);
+	wingsRightSolenoid.set_value(false);
 
 	moveRelative(-1.4, 1500);
 }

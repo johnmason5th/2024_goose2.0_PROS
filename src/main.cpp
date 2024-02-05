@@ -3,9 +3,11 @@
 const int AUTON_TYPE = 3;
 
 /*
-## Changes Requests ##
-Done- Skills, auton, use distance sensor
-Done- Kaboomer releases, puncher releases
+## Changes To Do ##
+- Make Mechs all objects, to make accessing through auton easier and make more sense
+- 
+Done - Skills, auton, use distance sensor
+Done - Kaboomer releases, puncher releases
 
 ## Innovations ##
 - Forward backward stick, even if joystick turned a little, leave at full power
@@ -63,10 +65,6 @@ void initialize() {
  * the robot is enabled, this task will exit.
  */
 void disabled() {
-	while (true) {	
-		puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
-		puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
-	}
 }
 
 /**
@@ -128,6 +126,7 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
+bool manualPuncher = false;
 void opcontrol() {
 	pros::Task controllerScreen(printController);
 	driverControlStartTime = pros::millis();
@@ -136,12 +135,14 @@ void opcontrol() {
 	while(true) {
 		drivetrain();
 		intake();
-		puncherWithRot();
-		// if (puncherRotationSensor.get_angle() == INFINITY) {
-		// 	puncherDumb();
-		// } else {
-		// 	puncherWithRot();
-		// }
+		if (controller.get_digital_new_press(DIGITAL_Y)) {
+			manualPuncher = !manualPuncher;
+		}
+		if (manualPuncher) {
+			puncherMotorsVolt(127);
+		} else {
+			puncherWithRot();
+		}
 		wings();
 		lift();
 		hang();
