@@ -26,5 +26,5 @@ Drivetrain drivetrain(&leftDT, &rightDT);
 Intake intake(&intakeMotor);
 Puncher puncher(&puncherMotor11, &puncherMotor5_5, &puncherRotationSensor, &puncherDistanceSensor);
 Wings wings(&wingsLeftSolenoid, &wingsRightSolenoid);
-Lift lift(&liftSolenoid);
+Lift lift(&liftSolenoid, &puncher);
 Hang hang(&kaboomerSolenoid, &lift, &puncher);

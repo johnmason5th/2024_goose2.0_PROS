@@ -4,6 +4,7 @@ Intake::Intake(pros::Motor* motor)
     : motor{motor}
 {
 }
-void Intake::setMovement(int direction) {
-    motor->move(127*direction);
+
+void Intake::move(int voltage) {
+    motor->move(voltage);
 }

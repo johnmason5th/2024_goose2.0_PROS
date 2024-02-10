@@ -1,7 +1,8 @@
 #include "lift.hpp"
 
-Lift::Lift(pros::ADIDigitalOut* solenoid)
+Lift::Lift(pros::ADIDigitalOut* solenoid, Puncher* puncher)
     : solenoid{solenoid}
+    , puncher{puncher}
     , extended{false}
     , enabled{true}
 {
@@ -17,8 +18,9 @@ void Lift::toggle() {
 void Lift::setExtended(bool value) {
     extended = value;
     solenoid->set_value(extended);
+    puncher->disable(!value);
 }
 
-void Lift::disable() {
-    enabled = false;
+void Lift::disable(bool value) {
+    enabled = !value;
 }

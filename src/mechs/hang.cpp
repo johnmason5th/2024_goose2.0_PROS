@@ -4,20 +4,18 @@
 
 Hang::Hang(pros::ADIDigitalOut* solenoid, Lift* lift, Puncher* puncher)
     : solenoid{solenoid}
-    , enabled{false}
     , lift{lift}
     , puncher{puncher}
+    , enabled{false}
 {
 }
 
-void Hang::enable(bool value) {
-    if (value) {
-        enabled = true;
-        solenoid->set_value(true);
-        lift->disable();
-        lift->setExtended(false);
+void Hang::toggle() {
+    enabled = !enabled;
+    solenoid->set_value(enabled);
+    lift->disable(enabled);
+    lift->setExtended(false);
 
-        puncher->disable();
-        puncher->setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
-    }
+    puncher->disable(true);
+    puncher->relax(true);
 }

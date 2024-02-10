@@ -4,10 +4,7 @@ const int AUTON_TYPE = 1;
 
 /*
 ## Changes To Do ##
-- Make Mechs all objects, to make accessing through auton easier and make more sense
 - 
-Done - Skills, auton, use distance sensor
-Done - Kaboomer releases, puncher releases
 
 ## Innovations ##
 - Forward backward stick, even if joystick turned a little, leave at full power
@@ -23,8 +20,7 @@ Done - Kaboomer releases, puncher releases
 const bool ENABLE_LCD = true;
 const bool ENABLE_GRAPHY = false;
 void initialize() {
-	puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
-	puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
+	puncher.setBrakeMode(MOTOR_BRAKE_HOLD);
 
 	controller.clear();
 	pros::delay(50);
@@ -65,8 +61,7 @@ void initialize() {
  * the VEX Competition Switch, following either autonomous or opcontrol. When
  * the robot is enabled, this task will exit.
  */
-void disabled() {
-}
+void disabled() {}
 
 /**
  * Runs after initialize(), and before autonomous when connected to the Field
@@ -131,12 +126,12 @@ void autonomous() {
  * task, not resume it from where it left off.
  */
 void opcontrol() {
-	puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
-	puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
+	puncher.setBrakeMode(MOTOR_BRAKE_HOLD);
 	controller.clear();
 	pros::Task updateControllerScreen(printController);
 	driverControlStartTime = pros::millis();
 	drivetrain.setBrakeMode(MOTOR_BRAKE_COAST);
+
 	// Main Loop
 	while(true) {
 		// Drivetrain
@@ -145,13 +140,13 @@ void opcontrol() {
 		drivetrain.arcade(speed, turn);
 
 		// Intake
-		int intakeDirection = 0;
 		if (controller.get_digital(DIGITAL_L1)) {
-			intakeDirection = 1;
+			intake.move(127);
 		} else if (controller.get_digital(DIGITAL_L2)) {
-			intakeDirection = -1;
+			intake.move(-127);
+		} else {
+			intake.move(0);
 		}
-		intake.setMovement(intakeDirection);
 
 		// Puncher
 		if (controller.get_digital_new_press(DIGITAL_Y)) {
@@ -170,8 +165,9 @@ void opcontrol() {
 		}
 
 		// Hang
-		hang.enable(controller.get_digital_new_press(DIGITAL_UP));
-		
+		if (controller.get_digital_new_press(DIGITAL_UP)) {
+			hang.toggle();
+		}
 
 		pros::delay(20);
 	}

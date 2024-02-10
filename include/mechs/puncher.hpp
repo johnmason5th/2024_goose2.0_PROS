@@ -21,14 +21,17 @@ class Puncher {
         std::string mode;
         bool manual;
         bool enabled;
+        bool relaxed;
     public:
         Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* rotationSensor, pros::Distance* distanceSensor);
         void brake();
         void setVoltage(int volt);
         void toggleManual();
+        void retract();
         void moveAuto();
         void move();
-        void disable();
+        void disable(bool value);
+        void relax(bool value);
         void setBrakeMode(pros::motor_brake_mode_e brakeMode);
 };
 

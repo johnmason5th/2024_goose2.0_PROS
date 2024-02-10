@@ -11,6 +11,8 @@ class Wings {
     public:
         Wings(pros::ADIDigitalOut* leftSolenoid, pros::ADIDigitalOut* rightSolenoid);
         void toggle();
+        void setLeft(bool value);
+        void setRight(bool value);
 };
 
 #endif

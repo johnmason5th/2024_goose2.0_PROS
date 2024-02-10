@@ -13,7 +13,7 @@ class Hang {
         Puncher* puncher;
     public:
         Hang(pros::ADIDigitalOut* solenoid, Lift* lift, Puncher* puncher);
-        void enable(bool value);
+        void toggle();
 };
 
 #endif

@@ -12,7 +12,8 @@ Puncher::Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* ro
     , timeAtLoad{0}
     , mode{"retracting"}
     , manual{false}
-    , enabled{true}
+    , enabled{false}
+    , relaxed{false}
 {
 }
 
@@ -30,6 +31,12 @@ void Puncher::toggleManual() {
     manual = !manual;
 }
 
+void Puncher::retract() {
+	setVoltage(127);
+	while (rotationSensor->get_angle()/100 < (TUCK_ANGLE-5) || (TUCK_ANGLE+5) < rotationSensor->get_angle()/100) {}
+	brake();
+}
+
 void Puncher::move() {
     if (manual) {
         setVoltage(127);
@@ -39,26 +46,19 @@ void Puncher::move() {
 }
 
 void Puncher::moveAuto() {
-    if (!enabled) return;
+    if (relaxed) return;
     int currentAngle = rotationSensor->get_angle() / 100;
 
     bool retracted = ((TUCK_ANGLE-10) < currentAngle && currentAngle < (TUCK_ANGLE+10));
-    if (distanceSensor->get() < DIST_SENSOR_DIST && !loaded) {
+    if (enabled && distanceSensor->get() < DIST_SENSOR_DIST && !loaded) {
         loaded = true;
         timeAtLoad = pros::millis();
-    } else {
-        loaded = false;
     }
 
-    if (loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED) {
-        mode = "launching";
-    }
-    if (!retracted) {
+    if (loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED || !retracted) {
         brake();
         setVoltage(127);
         mode = "launching";
-    } else {
-        brake();
     }
 
     if (mode == "holding") {
@@ -69,6 +69,7 @@ void Puncher::moveAuto() {
             mode = "holding";
         }
     } else if (mode == "launching") {
+        loaded = false;
         setVoltage(127);
         if (currentAngle > TUCK_ANGLE + 6) {
             mode = "retracting";
@@ -76,8 +77,17 @@ void Puncher::moveAuto() {
     }
 }
 
-void Puncher::disable() {
-    enabled = false;
+void Puncher::disable(bool value) {
+    enabled = !value;
+}
+
+void Puncher::relax(bool value) {
+    relaxed = value;
+    if (value) {
+        setBrakeMode(pros::E_MOTOR_BRAKE_COAST);
+    } else {
+        setBrakeMode(pros::E_MOTOR_BRAKE_HOLD);
+    }
 }
 
 void Puncher::setBrakeMode(pros::motor_brake_mode_e brakeMode) {

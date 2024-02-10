@@ -7,8 +7,6 @@ Drivetrain::Drivetrain(pros::MotorGroup* leftMotors, pros::MotorGroup* rightMoto
 }
 
 void Drivetrain::arcade(int speed, int turn) {
-    // Get joystick values and assign to variables
-    
     // Deadzone of -5 to 5 for each joystick
     if(abs(speed) < 5) {
         speed = 0;
