@@ -3,12 +3,10 @@
 
 #include "main.h"
 
-void pushAuton();
-void nearAutonWinPoint();
-void nearAutonNoDump();
 void nearAuton();
+void nearAutonElims();
 void farAuton();
-void basicFarAuton();
+void pushAuton();
 void prgmSkills();
 
 #endif

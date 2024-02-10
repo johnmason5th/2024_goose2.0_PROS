@@ -376,3 +376,40 @@ void nearAuton2() {
 
 	// Optional: Touch Hang
 }
+
+2/7/24
+
+void farAuton() {
+	// Grab center barrier triball
+	intakeMotor = 127;
+	moveRelative(2.52, 1400);
+
+	// Shove triballs into goal
+	turnAbsolute(-91-35, 800);
+	intakeMotor = 0;
+	wingsLeftSolenoid.set_value(true);
+	wingsRightSolenoid.set_value(true);
+	moveRelative(1.6, 1000);
+	wingsLeftSolenoid.set_value(false);
+	wingsRightSolenoid.set_value(false);
+	moveRelative(-0.50, 600);
+	// Grab third triball
+	turnAbsolute(122-35, 700);
+	intakeMotor = 127;
+	moveRelative(1.08, 800);
+	// Shove Triballs
+	turnAbsolute(230-35, 600);
+	moveRelative(1.81, 1500);
+	turnAbsolute(-45-35, 500);
+	intakeMotor = -127;
+	wingsRightSolenoid.set_value(true);
+	moveRelative(0.5, 700);
+	turnRelative(180, 900);
+	turnAbsolute(135-35, 700);
+	wingsRightSolenoid.set_value(false);
+	intakeMotor = 0;
+	moveRelative(-1, 700);
+	moveRelative(0.5, 700);
+	moveRelative(-1, 700);
+	moveRelative(0.5, 700);
+}

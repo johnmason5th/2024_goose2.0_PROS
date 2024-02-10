@@ -76,14 +76,24 @@ void opcontrol(void);
 #include "Graphy/Grapher.hpp"
 #include "Graphy.hpp"
 
+#include "mechs/drivetrain.hpp"
+#include "mechs/intake.hpp"
+#include "mechs/puncher.hpp"
+#include "mechs/wings.hpp"
+#include "mechs/lift.hpp"
+#include "mechs/hang.hpp"
+
 #include "utils/odometry.hpp"
 #include "utils/pid.hpp"
 #include "robotState.hpp"
+
 #include "electronics.hpp"
-#include "mechs.hpp"
+
 #include "userInterface.hpp"
+
 #include "auton/autonMotion.hpp"
 #include "auton/autons.hpp"
+
 //#include <iostream>
 #endif
 

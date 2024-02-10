@@ -1,6 +1,6 @@
 #include "main.h"
-// 1:Near  2:Far  3:Skills
-const int AUTON_TYPE = 3;
+// 1:Near  2:Far  3:Skills  4:NearElim
+const int AUTON_TYPE = 1;
 
 /*
 ## Changes To Do ##
@@ -45,7 +45,8 @@ void initialize() {
 	if (ENABLE_LCD) {
 		pros::lcd::initialize();
 		pros::lcd::set_background_color(LV_COLOR_BLACK);
-		pros::lcd::print(7, "Near    None    Far");
+		pros::lcd::set_text_color(LV_COLOR_WHITE);
+		// pros::lcd::print(7, "Near    None    Far");
 		pros::lcd::register_btn0_cb(on_left_button_lcd);
 		pros::lcd::register_btn1_cb(on_center_button_lcd);
 		pros::lcd::register_btn2_cb(on_right_button_lcd);
@@ -92,7 +93,7 @@ void competition_initialize() {}
 void autonomous() {
 	pros::Task odomTask(odometry);
 	// pros::Task grapherTask(graphing);
-	setDrivetrainBrakeMode(MOTOR_BRAKE_HOLD);
+	drivetrain.setBrakeMode(MOTOR_BRAKE_HOLD);
 	// Autons
 	switch (AUTON_TYPE) {
 		case 1:
@@ -104,12 +105,15 @@ void autonomous() {
 		case 3:
 			prgmSkills();
 			break;
+		case 4:
+			nearAutonElims();
+			break;
 		default:
 			pushAuton();
 	}
 
 	odomEnabled = false;
-	setDrivetrainBrakeMode(MOTOR_BRAKE_COAST);
+	drivetrain.setBrakeMode(MOTOR_BRAKE_COAST);
 	pros::delay(200);
 }
 
@@ -128,24 +132,45 @@ void autonomous() {
  */
 bool manualPuncher = false;
 void opcontrol() {
-	pros::Task controllerScreen(printController);
+	pros::Task updateControllerScreen(printController);
 	driverControlStartTime = pros::millis();
-	setDrivetrainBrakeMode(MOTOR_BRAKE_COAST);
+	drivetrain.setBrakeMode(MOTOR_BRAKE_COAST);
 	// Main Loop
 	while(true) {
-		drivetrain();
-		intake();
+		// Drivetrain
+		int speed = exponentialJoystick(controller.get_analog(ANALOG_LEFT_Y));
+		int turn = exponentialJoystick(controller.get_analog(ANALOG_RIGHT_X)) * 0.7;
+		drivetrain.arcade(speed, turn);
+
+		// Intake
+		int intakeDirection = 0;
+		if (controller.get_digital(DIGITAL_L1)) {
+			intakeDirection = 1;
+		} else if (controller.get_digital(DIGITAL_L2)) {
+			intakeDirection = -1;
+		}
+		intake.setMovement(intakeDirection);
+
+		// Puncher
 		if (controller.get_digital_new_press(DIGITAL_Y)) {
-			manualPuncher = !manualPuncher;
+			puncher.toggleManual();
 		}
-		if (manualPuncher) {
-			puncherMotorsVolt(127);
-		} else {
-			puncherWithRot();
+		puncher.move();
+
+		// Wings
+		if (controller.get_digital_new_press(DIGITAL_R2)) {
+			wings.toggle();
 		}
-		wings();
-		lift();
-		hang();
+
+		// Lift
+		if (controller.get_digital_new_press(DIGITAL_R1)) {
+			lift.toggle();
+		}
+
+		// Hang
+		hang.enable(controller.get_digital_new_press(DIGITAL_UP));
+		
+
 		pros::delay(20);
 	}
 }

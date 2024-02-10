@@ -8,9 +8,9 @@ To Do Programming
 To Do 10/19/23
 
 Judges
-- Auton strategy, how it works, why auton point
+- The amount of points auton gets, doesn't need detailed explanation
+- Bullet points of what it does: Win Point version, Elim version
 - How its run
-- Use humor
 - Think Award
 Judges Notes
 - Talk about sensors, Autonomous

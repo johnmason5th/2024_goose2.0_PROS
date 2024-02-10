@@ -9,8 +9,8 @@ extern pros::ADIDigitalOut wingsLeftSolenoid;
 extern pros::ADIDigitalOut wingsRightSolenoid;
 
 extern pros::ADIDigitalOut liftSolenoid;
-extern pros::ADIDigitalOut hangSolenoid;
-extern pros::ADIDigitalIn hangSwitch;
+extern pros::ADIDigitalOut kaboomerSolenoid;
+extern pros::ADIDigitalIn kaboomerSwitch;
 
 extern pros::Motor intakeMotor;
 
@@ -24,5 +24,12 @@ extern pros::Motor puncherMotor5_5;
 
 extern pros::MotorGroup leftDT;
 extern pros::MotorGroup rightDT;
+
+extern Drivetrain drivetrain;
+extern Intake intake;
+extern Puncher puncher;
+extern Wings wings;
+extern Lift lift;
+extern Hang hang;
 
 #endif
