@@ -166,7 +166,7 @@ void prgmSkills() {
 	// Retract Puncher for Crossing
 	puncher.setVoltage(127);
 	while (puncherRotationSensor.get_angle()/100 < (45-5) || (45+5) < puncherRotationSensor.get_angle()/100) {}
-	puncher.brakeMotors();
+	puncher.brake();
 
 	// Move to opposite side
 	turnAbsolute(-135+135, 700);

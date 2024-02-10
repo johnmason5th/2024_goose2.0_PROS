@@ -130,8 +130,10 @@ void autonomous() {
  * operator control task will be stopped. Re-enabling the robot will restart the
  * task, not resume it from where it left off.
  */
-bool manualPuncher = false;
 void opcontrol() {
+	puncherMotor11.set_brake_mode(MOTOR_BRAKE_HOLD);
+	puncherMotor5_5.set_brake_mode(MOTOR_BRAKE_HOLD);
+	controller.clear();
 	pros::Task updateControllerScreen(printController);
 	driverControlStartTime = pros::millis();
 	drivetrain.setBrakeMode(MOTOR_BRAKE_COAST);

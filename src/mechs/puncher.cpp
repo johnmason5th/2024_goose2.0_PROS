@@ -5,9 +5,8 @@ Puncher::Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* ro
     , motor5_5{motor5_5}
     , rotationSensor{rotationSensor}
     , distanceSensor{distanceSensor}
-    , retracted{true}
     , loaded{false}
-    , tuckAngle{40}
+    , TUCK_ANGLE{40}
     , DIST_SENSOR_DIST{30}
     , WAIT_SINCE_LOADED{0}
     , timeAtLoad{0}
@@ -17,7 +16,7 @@ Puncher::Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* ro
 {
 }
 
-void Puncher::brakeMotors() {
+void Puncher::brake() {
     motor11->brake();
     motor5_5->brake();
 }
@@ -43,34 +42,42 @@ void Puncher::moveAuto() {
     if (!enabled) return;
     int currentAngle = rotationSensor->get_angle() / 100;
 
-    retracted = ((tuckAngle-10) < currentAngle && currentAngle < (tuckAngle+10));
+    bool retracted = ((TUCK_ANGLE-10) < currentAngle && currentAngle < (TUCK_ANGLE+10));
     if (distanceSensor->get() < DIST_SENSOR_DIST && !loaded) {
         loaded = true;
         timeAtLoad = pros::millis();
+    } else {
+        loaded = false;
     }
 
-    if ((loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED) || !retracted) {
+    if (loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED) {
         mode = "launching";
+    }
+    if (!retracted) {
+        brake();
+        setVoltage(127);
+        mode = "launching";
+    } else {
+        brake();
     }
 
     if (mode == "holding") {
-        brakeMotors();
+        brake();
     } else if (mode == "retracting") {
         setVoltage(127);
         if (retracted) {
             mode = "holding";
         }
     } else if (mode == "launching") {
-        loaded = false;
         setVoltage(127);
-        if (currentAngle > tuckAngle + 6) {
+        if (currentAngle > TUCK_ANGLE + 6) {
             mode = "retracting";
         }
     }
 }
 
 void Puncher::disable() {
-
+    enabled = false;
 }
 
 void Puncher::setBrakeMode(pros::motor_brake_mode_e brakeMode) {
