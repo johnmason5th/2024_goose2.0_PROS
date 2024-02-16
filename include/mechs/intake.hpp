@@ -8,7 +8,7 @@ class Intake {
         pros::Motor* motor;
     public:
         Intake(pros::Motor* motor);
-        void move(int voltage);
+        void spin(int voltage);
 };
 
 #endif

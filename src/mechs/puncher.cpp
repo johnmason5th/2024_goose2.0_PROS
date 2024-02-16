@@ -1,3 +1,4 @@
+
 #include "puncher.hpp"
 
 Puncher::Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* rotationSensor, pros::Distance* distanceSensor)
@@ -28,6 +29,7 @@ void Puncher::setVoltage(int volt) {
 }
 
 void Puncher::toggleManual() {
+    brake();
     manual = !manual;
 }
 
@@ -56,7 +58,6 @@ void Puncher::moveAuto() {
     }
 
     if (loaded && (pros::millis() - timeAtLoad) > WAIT_SINCE_LOADED || !retracted) {
-        brake();
         setVoltage(127);
         mode = "launching";
     }
@@ -78,6 +79,9 @@ void Puncher::moveAuto() {
 }
 
 void Puncher::disable(bool value) {
+    if (value) {
+        brake();
+    }
     enabled = !value;
 }
 

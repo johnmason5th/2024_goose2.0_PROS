@@ -18,4 +18,5 @@ void Hang::toggle() {
 
     puncher->disable(true);
     puncher->relax(true);
+    puncher->brake();
 }

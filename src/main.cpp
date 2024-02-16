@@ -1,6 +1,6 @@
 #include "main.h"
 // 1:Near  2:Far  3:Skills  4:NearElim
-const int AUTON_TYPE = 1;
+const int AUTON_TYPE = 2;
 
 /*
 ## Changes To Do ##
@@ -141,11 +141,11 @@ void opcontrol() {
 
 		// Intake
 		if (controller.get_digital(DIGITAL_L1)) {
-			intake.move(127);
+			intake.spin(127);
 		} else if (controller.get_digital(DIGITAL_L2)) {
-			intake.move(-127);
+			intake.spin(-127);
 		} else {
-			intake.move(0);
+			intake.spin(0);
 		}
 
 		// Puncher

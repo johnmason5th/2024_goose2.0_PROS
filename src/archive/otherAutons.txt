@@ -413,3 +413,38 @@ void farAuton() {
 	moveRelative(-1, 700);
 	moveRelative(0.5, 700);
 }
+
+void nearAuton() {
+	// Shoot ally triball towards goal
+	wings.setLeft(true);
+	pros::delay(250);
+	wings.setLeft(false);
+
+	// Grab Triball
+	intake.move(127);
+	moveRelative(2, 1300);
+
+	// Score ally triball
+	moveRelative(-1.9, 1300);
+	turnAbsolute(-157+20, 700);
+	moveRelative(-1.3, 1000);
+
+	// Remove MLZ triball
+	turnAbsolute(177+20, 650);
+	moveRelative(0.45, 700);
+	turnAbsolute(-120+20, 700);
+	wings.setRight(true);
+	moveRelative(0.6, 700);
+	turnAbsolute(-105+20, 600);
+
+	// Push triballs across hang
+	intake.move(-127);
+	moveRelative(1, 900);
+	wings.setRight(false);
+	turnAbsolute(-80+20, 600);
+	wings.setRight(true);
+	moveRelative(0.72, 1000);
+	pros::delay(500);
+	wings.setRight(false);
+	intake.move(0);
+}

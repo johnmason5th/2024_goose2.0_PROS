@@ -10,8 +10,11 @@ Lift::Lift(pros::ADIDigitalOut* solenoid, Puncher* puncher)
 
 void Lift::toggle() {
     if (enabled) {
-        extended = !extended;
-        setExtended(extended);
+        if (extended) {
+            setExtended(false);
+        } else {
+            setExtended(true);
+        }
     }
 }
 

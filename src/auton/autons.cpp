@@ -7,8 +7,26 @@
  * dump all 3 (or 2 if hang is off limits) triballs on other side of hang
  * make it optional that we touch hang or not
 */
-// Starts at angle of -20 relative to field
-// Place at angle of -21 for some reason
+// Maybe more consistent idea:
+// Shoot ally triball towards goal, Descore MLZ ball, grab center triball, score ally triball, push triballs across hang
+// Starts at angle of 0 relative to field
+void nearAutonWinPoint() {
+	// Descore MLZ ball & Shoot ally triball towards goal
+	wings.setLeft(true);
+	pros::delay(250);
+	turnRelative(225, 2000);
+	turnAbsolute(225, 500);
+	wings.setLeft(false);
+
+	// Touch hang
+	moveRelative(0.4, 700);
+	turnAbsolute(-90, 700);
+	intake.spin(-127);
+	moveRelative(1.1, 1000);
+	pros::delay(1000);
+	intake.spin(0);
+}
+
 void nearAuton() {
 	// Shoot ally triball towards goal
 	wings.setLeft(true);
@@ -16,7 +34,7 @@ void nearAuton() {
 	wings.setLeft(false);
 
 	// Grab Triball
-	intake.move(127);
+	intake.spin(127);
 	moveRelative(2, 1300);
 
 	// Score ally triball
@@ -33,7 +51,7 @@ void nearAuton() {
 	turnAbsolute(-105+20, 600);
 
 	// Push triballs across hang
-	intake.move(-127);
+	intake.spin(-127);
 	moveRelative(1, 900);
 	wings.setRight(false);
 	turnAbsolute(-80+20, 600);
@@ -41,7 +59,7 @@ void nearAuton() {
 	moveRelative(0.72, 1000);
 	pros::delay(500);
 	wings.setRight(false);
-	intake.move(0);
+	intake.spin(0);
 }
 
 void nearAutonElims() {
@@ -51,7 +69,7 @@ void nearAutonElims() {
 	wings.setLeft(false);
 
 	// Grab Triball
-	intake.move(127);
+	intake.spin(127);
 	moveRelative(2, 1300);
 
 	// Score ally triball
@@ -68,7 +86,7 @@ void nearAutonElims() {
 	turnAbsolute(-105+20, 600);
 
 	// Push triballs across hang
-	intake.move(-127);
+	intake.spin(-127);
 	moveRelative(1, 900);
 	wings.setRight(false);
 	turnAbsolute(-80+20, 600);
@@ -76,7 +94,7 @@ void nearAutonElims() {
 	moveRelative(0.72, 1000);
 	pros::delay(500);
 	wings.setRight(false);
-	intake.move(0);
+	intake.spin(0);
 
 	// Go to MLZ
 	moveRelative(-1.4, 1000);
@@ -85,14 +103,14 @@ void nearAutonElims() {
 // -35
 void farAuton() {
 	// Grab hang triball
-	intake.move(127);
+	intake.spin(127);
 	moveRelative(0.42, 600, 90);
 	pros::delay(100);
 
 	// Get MLZ triball
 	moveRelative(-1.3, 800);
 	turnAbsolute(-139, 1000);
-	intake.move(-127);
+	intake.spin(-127);
 	wings.setLeft(true);
 	wings.setRight(true);
 	moveRelative(0.75, 600);
@@ -101,28 +119,28 @@ void farAuton() {
 	turnAbsolute(-100, 500);
 	wings.setRight(false);
 	turnAbsolute(-165, 600);
+	wings.setLeft(false);
 	moveRelative(0.55, 600);
 	turnAbsolute(-92, 550);
-	wings.setLeft(false);
-	intake.move(-127);
+	intake.spin(-127);
 	moveRelative(1.2, 650);
 
 	// Grab Close Barrier Triball
 	turnAbsolute(-90, 400);
 	moveRelative(-0.64, 800);
 	turnAbsolute(-13, 550);
-	intake.move(127);
+	intake.spin(127);
 	moveRelative(2, 1150);
 	turnAbsolute(-160, 650);
-	intake.move(-60);
+	intake.spin(-60);
 	moveRelative(0.64, 650);
 
 	// Grab Far Barrier Triball
-	intake.move(127);
+	intake.spin(127);
 	turnAbsolute(-30, 550);
 	moveRelative(1.02, 800);
 	turnAbsolute(-190, 800, 110);
-	intake.move(-50);
+	intake.spin(-50);
 	wings.setLeft(true);
 	wings.setRight(true);
 	moveRelative(1.5, 1000);
@@ -148,53 +166,61 @@ Prgm Skills Process:
 - Go and push triballs into goal
 */
 // -135
-const int MATCHLOADING_TIME = 32000;
+const int MATCHLOADING_TIME = 30000;
 void prgmSkills() {
 	puncher.setBrakeMode(MOTOR_BRAKE_HOLD);
 	// Set up for launching
-	moveRelative(-0.25, 500);
-	turnAbsolute(-75+135, 800);
-	moveRelative(-0.2, 500);
-	lift.setExtended(true);
+	moveRelative(-0.35, 500);
+	turnAbsolute(-74+135, 800);
+	moveRelative(-0.18, 500);
+	// lift.toggle();
 	int puncherStart = pros::millis();
+	puncher.toggleManual();
 	while ((puncherStart + MATCHLOADING_TIME) > pros::millis()) {
 		puncher.move();
 	}
+	puncher.toggleManual();
 
 	// Move to opposite side
-	lift.setExtended(false);
+	// lift.toggle();
 	puncher.retract();
 	turnAbsolute(-135+135, 700);
-	moveRelative(0.5, 700);
-	turnAbsolute(-90+135, 700);
-	moveRelative(3.2, 2000);
+	moveRelative(0.6, 700);
+	turnAbsolute(-90+136, 900);
+	moveRelative(3.4, 2400);
 
 	// Shove side face of goal
-	turnAbsolute(-20+135, 1000);
-	moveRelative(2, 1500);
-	moveRelative(-0.5, 800);
+	turnAbsolute(-40+135, 1000);
+	wings.setLeft(true);
+	moveRelative(2, 1600, 90);
+	wings.setLeft(false);
+	moveRelative(-0.6, 1000);
+	moveRelative(2, 1600);
+	moveRelative(-0.6, 1000);
+	turnAbsolute(0+135, 1000);
 
 	// Shove first face of goal
-	turnAbsolute(45+135, 600);
-	moveRelative(2.4, 1500);
-	turnAbsolute(-90+135, 1000);
+	turnAbsolute(55+135, 600);
+	moveRelative(1.8, 1500);
+	turnAbsolute(-75+135, 1000);
 	wings.setLeft(true);
 	wings.setRight(true);
-	moveRelative(2, 1500);
+	moveRelative(2, 1500, 80);
 	wings.setLeft(false);
 	wings.setRight(false);
 
 	// Shove second face of goal
+	turnAbsolute(-90+135, 100);
 	moveRelative(-1.4, 1000);
 	turnAbsolute(0+135, 1000);
-	moveRelative(0.5, 1000);
-	turnAbsolute(-90+135, 1000);
+	moveRelative(1.4, 1000);
+	turnAbsolute(-135+135, 1000);
 
 	wings.setLeft(true);
 	wings.setRight(true);
-	moveRelative(2, 2000);
+	moveRelative(2.5, 2000, 80);
 	wings.setLeft(false);
 	wings.setRight(false);
 
-	moveRelative(-1.4, 1500);
+	moveRelative(-0.7, 1500);
 }

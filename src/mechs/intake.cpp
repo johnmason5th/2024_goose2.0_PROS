@@ -5,6 +5,6 @@ Intake::Intake(pros::Motor* motor)
 {
 }
 
-void Intake::move(int voltage) {
+void Intake::spin(int voltage) {
     motor->move(voltage);
 }
