@@ -2,16 +2,20 @@
 #include "puncher.hpp"
 
 Puncher::Puncher(pros::Motor* motor11, pros::Motor* motor5_5, pros::Rotation* rotationSensor, pros::Distance* distanceSensor)
+    // Objects
     : motor11{motor11}
     , motor5_5{motor5_5}
     , rotationSensor{rotationSensor}
     , distanceSensor{distanceSensor}
-    , loaded{false}
+    // Constants
     , TUCK_ANGLE{40}
     , DIST_SENSOR_DIST{30}
     , WAIT_SINCE_LOADED{0}
+    // Values
     , timeAtLoad{0}
     , mode{"retracting"}
+    // States
+    , loaded{false}
     , manual{false}
     , enabled{false}
     , relaxed{false}

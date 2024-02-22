@@ -5,14 +5,12 @@
 
 class Wings {
     private:
-        pros::ADIDigitalOut* leftSolenoid;
-        pros::ADIDigitalOut* rightSolenoid;
+        pros::ADIDigitalOut* solenoid;
         bool extended;
     public:
-        Wings(pros::ADIDigitalOut* leftSolenoid, pros::ADIDigitalOut* rightSolenoid);
+        Wings(pros::ADIDigitalOut* solenoid);
         void toggle();
-        void setLeft(bool value);
-        void setRight(bool value);
+        void extend(bool value);
 };
 
 #endif

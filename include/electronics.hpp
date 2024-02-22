@@ -14,7 +14,8 @@ extern pros::MotorGroup rightDT;
 extern Drivetrain drivetrain;
 extern Intake intake;
 extern Puncher puncher;
-extern Wings wings;
+extern Wings horizontalWings;
+extern Wings verticalWings;
 extern Lift lift;
 extern Hang hang;
 

@@ -121,7 +121,7 @@ void moveRelative(double tiles, int maxMilliseconds, int voltage) {
 	double targetDistance = tilesToEncoderUnits;
 	double headingInitial = g_robotHeading;
 
-	PID drivePID = PID(0.3, 0.0, 4, 5);
+	PID drivePID = PID(0.3, 0.0, 5, 10);
 	PID turnPID = PID(2.4, 0.0, 0.0, 2);
 
 	double leftDrivePrevSpeed = 0;

@@ -32,11 +32,11 @@ void on_right_button_lcd() {
 	showPorts = !showPorts;
 	if (showPorts) {
 		pros::lcd::clear();
-		pros::lcd::print(0, "LWing:A RWing:B");
-		pros::lcd::print(1, "Lift:F Kaboomer:C");
-		pros::lcd::print(2, "Intake:7 Inertial:15");
-		pros::lcd::print(3, "Rotation:18 Distance:19");
-		pros::lcd::print(4, "Puncher11:15 Puncher5_5:20");
-		pros::lcd::print(5, "LeftDT:3,5,6 RightDT:1,2,4");
+		pros::lcd::print(0, "HorizWing:A VertWing:B");
+		pros::lcd::print(1, "Lift:F Hang:C");
+		pros::lcd::print(2, "Intake:7 Inertial:21");
+		pros::lcd::print(3, "Rotation:18 Distance:16");
+		pros::lcd::print(4, "Puncher11:19 Puncher5_5:20");
+		pros::lcd::print(5, "LeftDT:1,2,3 RightDT:8,9,10");
 	}
 }

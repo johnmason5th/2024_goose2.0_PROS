@@ -1,22 +1,16 @@
 #include "wings.hpp"
 
-Wings::Wings(pros::ADIDigitalOut* leftSolenoid, pros::ADIDigitalOut* rightSolenoid)
-    : leftSolenoid{leftSolenoid}
-    , rightSolenoid{rightSolenoid}
+Wings::Wings(pros::ADIDigitalOut* solenoid)
+    : solenoid{solenoid}
     , extended{false}
 {
 }
 
 void Wings::toggle() {
     extended = !extended;
-    leftSolenoid->set_value(extended);
-    rightSolenoid->set_value(extended);
+    solenoid->set_value(extended);
 }
 
-void Wings::setLeft(bool value) {
-    leftSolenoid->set_value(value);
-}
-
-void Wings::setRight(bool value) {
-    rightSolenoid->set_value(value);
+void Wings::extend(bool value) {
+    solenoid->set_value(value);
 }

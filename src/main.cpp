@@ -1,14 +1,13 @@
 #include "main.h"
 // 1:Near  2:Far  3:Skills  4:NearElim
-const int AUTON_TYPE = 2;
+const int AUTON_TYPE = 3;
 
 /*
 ## Changes To Do ##
-- 
+- Finish release version of programming skills
+
 
 ## Innovations ##
-- Forward backward stick, even if joystick turned a little, leave at full power
-	- driver accidentally turns unintentionally
 */
 
 /**
@@ -154,18 +153,23 @@ void opcontrol() {
 		}
 		puncher.move();
 
-		// Wings
+		// Horizontal Wings
 		if (controller.get_digital_new_press(DIGITAL_R2)) {
-			wings.toggle();
+			horizontalWings.toggle();
 		}
 
+		// Vertical Wings
+		if (controller.get_digital_new_press(DIGITAL_A)) {
+			verticalWings.toggle();
+		}
+		
 		// Lift
 		if (controller.get_digital_new_press(DIGITAL_R1)) {
 			lift.toggle();
 		}
 
 		// Hang
-		if (controller.get_digital_new_press(DIGITAL_UP)) {
+		if (controller.get_digital_new_press(DIGITAL_B)) {
 			hang.toggle();
 		}
 
